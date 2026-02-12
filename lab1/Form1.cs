@@ -130,7 +130,7 @@ namespace lab1
 
                 try
                 {
-                    File.WriteAllText(fileName, text2.Text);
+                    File.WriteAllText(fileName, text2Vig.Text);
                 }
                 catch (Exception ex)
                 {

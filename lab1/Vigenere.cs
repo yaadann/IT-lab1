@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace lab1
 {
@@ -78,18 +79,8 @@ namespace lab1
             char[] cipherText = new char[text.Length];
             for (int i = 0; i < cipherText.Length; i++)
             {
-                int m, k;
-                if (text[i] == 'Ё')
-                    m = 7;
-                else
-                    m = text[i] - 'А' + 1;
-                if (key[i] == 'Ё')
-                    k = 7;
-                else
-                    k = key[i] - 'А' + 1;
-
-                m += Convert.ToInt32(m > 7);
-                k += Convert.ToInt32(k > 7);
+                int m = FindAlphabetPosition(text[i]) + 1;
+                int k = FindAlphabetPosition(key[i]) + 1;
 
                 int index = (m + k) % N;
                 if (index == 0)
@@ -110,23 +101,27 @@ namespace lab1
             return EncodingSymbols();
         }
 
+        private int FindAlphabetPosition(char ch)
+        {
+            int index = 0;
+            for (int i = 0; i < Alphabet.Length; i++)
+            {
+                if (ch == Alphabet[i])
+                {
+                    index = i;
+                    break;
+                }
+            }
+            return index;
+        }
+
         private string DecodingSymbols()
         {
             char[] plainText = new char[text.Length];
             for (int i = 0; i < plainText.Length; i++)
             {
-                int c, k;
-                if (text[i] == 'Ё')
-                    c = 7;
-                else
-                    c = text[i] - 'А' + 1;
-                if (key[i] == 'Ё')
-                    k = 7;
-                else
-                    k = key[i] - 'А' + 1;
-
-                c += Convert.ToInt32(c > 7);
-                k += Convert.ToInt32(k > 7);
+                int c = FindAlphabetPosition(text[i]) + 1;
+                int k = FindAlphabetPosition(key[i]) + 1;
 
                 int index = (c - k + N) % N;
                 if (index == 0)
